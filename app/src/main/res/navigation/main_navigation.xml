@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_navigation"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.simileoluwaaluko.audiomail.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home">
+
+        <action android:id="@+id/recipient_navigation"
+            app:destination="@+id/recipientFragment"/>
+
+        <action android:id="@+id/cc_navigation"
+            app:destination="@+id/CCFragment"/>
+
+        <action android:id="@+id/mail_body_navigation"
+            app:destination="@+id/mailBodyFragment" />
+
+        <action android:id="@+id/summary_send_navigation"
+            app:destination="@+id/summarySendFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/CCFragment"
+        android:name="com.simileoluwaaluko.audiomail.CCFragment"
+        android:label="fragment_cc"
+        tools:layout="@layout/fragment_cc">
+
+    </fragment>
+    <fragment
+        android:id="@+id/mailBodyFragment"
+        android:name="com.simileoluwaaluko.audiomail.MailBodyFragment"
+        android:label="fragment_mail_body"
+        tools:layout="@layout/fragment_mail_body" />
+    <fragment
+        android:id="@+id/recipientFragment"
+        android:name="com.simileoluwaaluko.audiomail.RecipientFragment"
+        android:label="fragment_recipient"
+        tools:layout="@layout/fragment_recipient" />
+    <fragment
+        android:id="@+id/summarySendFragment"
+        android:name="com.simileoluwaaluko.audiomail.SummarySendFragment"
+        android:label="fragment_summary_send"
+        tools:layout="@layout/fragment_summary_send" />
+</navigation>

@@ -8,4 +8,10 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="splashScreenTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowBackground">@drawable/splashscreen_background</item>
+        <item name="colorPrimaryDark">@color/colorPrimary</item>
+    </style>
+
+
 </resources>
