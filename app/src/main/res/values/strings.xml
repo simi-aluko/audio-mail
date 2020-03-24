@@ -8,4 +8,12 @@
     <string name="cc">CC</string>
     <string name="send">Send</string>
     <string name="body">Body</string>
+    <string name="command_button">command button</string>
+    <string name="welcome_">Welcome,</string>
+    <string name="home_explanation_header">AudioMail helps you send mails completely via audio. To begin, click on the button at the bottom center, and say:</string>
+    <string name="home_instruction_one"><b>One</b>, to enter Recipients Address.</string>
+    <string name="home_instruction_two"><b>Two</b>, to enter the Carbon Copy\'s Address.</string>
+    <string name="home_instruction_three"><b>Three</b>, to enter the Message Body.</string>
+    <string name="home_instruction_four"><b>Four</b>, to see the mail summary and send the mail.</string>
+    <string name="home_instruction_five"><b>Five</b>, to repeat the instructions.</string>
 </resources>
