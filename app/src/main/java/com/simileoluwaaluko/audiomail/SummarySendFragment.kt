@@ -127,17 +127,20 @@ class SummarySendFragment : Fragment(),View.OnClickListener, TextToSpeech.OnInit
                 else summarySendFragmentViewModel.summarySendFragmentTextToBeSpoken.value = "Mail is empty."
             }
             "2","to","two","too" -> {
-                summary_recipient.setText("")
-                summary_cc.setText("")
-                summary_body.setText("")
+                summarySendFragmentViewModel.mailRecipientAddress.value = ""
+                summarySendFragmentViewModel.mailCCAddress.value = ""
+                summarySendFragmentViewModel.mailBody.value = ""
                 summarySendFragmentViewModel.summarySendFragmentTextToBeSpoken.value = "Mail has been cleared."
             }
             "3","three","tree" -> {
-                val action = SummarySendFragmentDirections.backNavigation()
-                findNavController().navigate(action)
+                toast("sending mail").show()
             }
             "4","four","for" -> {
                 summarySendFragmentViewModel.summarySendFragmentTextToBeSpoken.value = getString(R.string.mail_summarysend_tts)
+            }
+            "5", "five" -> {
+                val action = SummarySendFragmentDirections.backNavigation()
+                findNavController().navigate(action)
             }
             else -> summarySendFragmentViewModel.summarySendFragmentTextToBeSpoken.value = getString(R.string.unknown_command)
         }

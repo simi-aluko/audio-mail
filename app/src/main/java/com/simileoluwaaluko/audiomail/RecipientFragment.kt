@@ -120,7 +120,7 @@ class RecipientFragment : Fragment(), View.OnClickListener, TextToSpeech.OnInitL
                 else recipientFragmentViewModel.recipientFragmentTextToBeSpoken.value = "Recipient's address is empty."
             }
             "2","to","two","too" -> {
-                recipient_address_edittext.setText("")
+                recipientFragmentViewModel.mailRecipientAddress.value = ""
                 recipientFragmentViewModel.recipientFragmentTextToBeSpoken.value = "Recipient's address has been cleared."
             }
             "3","three","tree" -> {

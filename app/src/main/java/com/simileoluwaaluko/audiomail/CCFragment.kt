@@ -121,7 +121,7 @@ class CCFragment : Fragment(), View.OnClickListener, TextToSpeech.OnInitListener
                 else ccFragmentViewModel.ccFragmentTextToBeSpoken.value = "Mail CC's address is empty."
             }
             "2","to","two","too" -> {
-                mail_cc_edittext.setText("")
+                ccFragmentViewModel.mailCCAddress.value = ""
                 ccFragmentViewModel.ccFragmentTextToBeSpoken.value = "Mail CC's address has been cleared."
             }
             "3","three","tree" -> {

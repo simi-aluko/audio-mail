@@ -19,7 +19,7 @@
 
 <!--    Mail Recipient-->
     <string name="mail_recipient">Mail Recipient</string>
-    <string name="mail_recipient_explanation">Clicking on the button at the bottom left, you can read out the recipient\'s address, using the button on the bottom right, you can say the commands. Say:</string>
+    <string name="mail_recipient_explanation">Clicking on the button at the bottom left, you can read out the recipient\'s address, clicking on the button on the bottom right, you can say the commands. Say:</string>
     <string name="mail_recipient_instruction_one"><b>One</b>, to read out what you\'ve wrote.</string>
     <string name="mail_recipient_instruction_two"><b>Two</b>, to clear what you\'ve wrote.</string>
     <string name="mail_recipient_instruction_three"><b>Three</b>, to go back to main page.</string>
@@ -27,7 +27,7 @@
 
     <!--    Mail CC-->
     <string name="mail_cc">Mail CC</string>
-    <string name="mail_cc_explanation">Clicking on the button at the bottom left, you can read out the recipient\'s CC, using the button on the bottom right, you can say the commands. Say:</string>
+    <string name="mail_cc_explanation">Clicking on the button at the bottom left, you can read out the recipient\'s CC, clicking on the button on the bottom right, you can say the commands. Say:</string>
     <string name="mail_cc_instruction_one"><b>One</b>, to read out what you\'ve wrote.</string>
     <string name="mail_cc_instruction_two"><b>Two</b>, to clear what you\'ve wrote.</string>
     <string name="mail_cc_instruction_three"><b>Three</b>, to go back to main page.</string>
@@ -35,7 +35,7 @@
 
     <!--    Mail Body-->
     <string name="mail_body">Mail Body</string>
-    <string name="mail_body_explanation">Clicking on the button at the bottom left, you can read out the message body, using the button on the bottom right, you can say the commands. Say:</string>
+    <string name="mail_body_explanation">Clicking on the button at the bottom left, you can read out the message body, clicking on the button on the bottom right, you can say the commands. Say:</string>
     <string name="mail_body_instruction_one"><b>One</b>, to read out what you\'ve wrote.</string>
     <string name="mail_body_instruction_two"><b>Two</b>, to clear what you\'ve wrote.</string>
     <string name="mail_body_instruction_three"><b>Three</b>, to go back to main page.</string>

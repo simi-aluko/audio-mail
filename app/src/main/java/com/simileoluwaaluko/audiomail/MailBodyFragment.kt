@@ -117,7 +117,11 @@ class MailBodyFragment : Fragment(), View.OnClickListener, TextToSpeech.OnInitLi
     }
 
     private fun handleMessageBodyInput(spokenText: String){
-        mailBodyFragmentViewModel.mailBody.value = mailBodyFragmentViewModel.mailBody.value + spokenText
+        mailBodyFragmentViewModel.mailBody.value?.let{
+            if(it.isEmpty()){
+                mailBodyFragmentViewModel.mailBody.value = spokenText
+            }else mailBodyFragmentViewModel.mailBody.value = "${mailBodyFragmentViewModel.mailBody.value}. $spokenText"
+        }
     }
 
     private fun handleInstructionRequestResult(spokenText : String){
@@ -128,7 +132,7 @@ class MailBodyFragment : Fragment(), View.OnClickListener, TextToSpeech.OnInitLi
                 else mailBodyFragmentViewModel.mailBodyFragmentTextToBeSpoken.value = "Mail's body is empty."
             }
             "2","to","two","too" -> {
-                mail_body_edittext.setText("")
+                mailBodyFragmentViewModel.mailBody.value = ""
                 mailBodyFragmentViewModel.mailBodyFragmentTextToBeSpoken.value = "Mail's body has been cleared."
             }
             "3","three","tree" -> {

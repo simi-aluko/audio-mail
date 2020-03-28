@@ -18,6 +18,6 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
 
     val mailRecipientAddress = MutableLiveData<String>()
     val mailCCAddress = MutableLiveData<String>()
-    val mailBody = MutableLiveData<String>()
+    val mailBody = MutableLiveData("")
 
 }

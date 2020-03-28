@@ -130,6 +130,19 @@
                 android:textSize="17sp"
                 android:textColor="@color/colorPrimaryDark"
                 android:fontFamily="@font/cera_round_pro_regular"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_five"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="10dp"
+                android:text="@string/mail_summarysend_instruction_five"
+                android:gravity="center_vertical"
+                android:drawablePadding="15dp"
+                android:textSize="17sp"
+                android:textColor="@color/colorPrimaryDark"
+                android:fontFamily="@font/cera_round_pro_regular"/>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
