@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.iterator
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
@@ -16,6 +17,7 @@ import java.util.*
 
 
 class MainActivity : AppCompatActivity(){
+    lateinit var mainActivityViewModel: MainActivityViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,10 +25,10 @@ class MainActivity : AppCompatActivity(){
         setContentView(R.layout.activity_main)
 
         val host = supportFragmentManager.findFragmentById(R.id.my_nav_host_fragment) as NavHostFragment? ?: return
-
         val navController = host.navController
 
         setUpBottomNav(navController)
+        mainActivityViewModel = ViewModelProvider(this)[MainActivityViewModel::class.java]
     }
 
     private fun setUpBottomNav(navController : NavController){
@@ -40,4 +42,5 @@ class MainActivity : AppCompatActivity(){
             menu?.isEnabled = false
         }
     }
+
 }

@@ -31,21 +31,31 @@
         android:name="com.simileoluwaaluko.audiomail.CCFragment"
         android:label="fragment_cc"
         tools:layout="@layout/fragment_cc">
-
+        <action android:id="@+id/back_navigation"
+            app:destination="@+id/homeFragment"/>
     </fragment>
     <fragment
         android:id="@+id/mailBodyFragment"
         android:name="com.simileoluwaaluko.audiomail.MailBodyFragment"
         android:label="fragment_mail_body"
-        tools:layout="@layout/fragment_mail_body" />
+        tools:layout="@layout/fragment_mail_body">
+        <action android:id="@+id/back_navigation"
+            app:destination="@+id/homeFragment"/>
+    </fragment>
     <fragment
         android:id="@+id/recipientFragment"
         android:name="com.simileoluwaaluko.audiomail.RecipientFragment"
         android:label="fragment_recipient"
-        tools:layout="@layout/fragment_recipient" />
+        tools:layout="@layout/fragment_recipient">
+        <action android:id="@+id/back_navigation"
+            app:destination="@+id/homeFragment"/>
+    </fragment>
     <fragment
         android:id="@+id/summarySendFragment"
         android:name="com.simileoluwaaluko.audiomail.SummarySendFragment"
         android:label="fragment_summary_send"
-        tools:layout="@layout/fragment_summary_send" />
+        tools:layout="@layout/fragment_summary_send">
+        <action android:id="@+id/back_navigation"
+            app:destination="@+id/homeFragment"/>
+    </fragment>
 </navigation>

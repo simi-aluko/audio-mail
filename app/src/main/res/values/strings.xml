@@ -1,8 +1,6 @@
 <resources>
     <string name="app_name">Audio Mail</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="home">Home</string>
     <string name="recipient">Recipient</string>
     <string name="cc">CC</string>
@@ -51,4 +49,51 @@
     <string name="mail_summarysend_instruction_three"><b>Three</b>, to send mail.</string>
     <string name="mail_summarysend_instruction_four"><b>Four</b>, to repeat the instructions.</string>
     <string name="mail_summarysend_instruction_five"><b>Five</b>, to go back to home page.</string>
+
+
+    <string name="speak_the_recipient_s_address">Speak the recipient\'s address</string>
+    <string name="speak_the_mail_s_cc_address">Speak the mail\'s cc address</string>
+    <string name="speak_the_mail_body">Speak the Mail body</string>
+
+
+    <!--    Text to Speech-->
+    <!--    Text to Speech-->
+    <!--    Text to Speech-->
+    <string name="home_tts">Welcome to the home page.
+    AudioMail helps you send mails completely via audio. To begin, click on the button at the bottom center, and say:
+    One, to enter Recipients Address.
+    Two, to enter the Carbon Copy\'s Address.
+    Three, to enter the Message Body.
+    Four, to see the mail summary and send the mail.
+    Five, to repeat the instructions.</string>
+
+    <string name="mail_recipient_tts">Mail Recipient page.
+    Clicking on the button at the bottom left, you can read out the recipient\'s address, using the button on the bottom right, you can say the commands. Say:
+    One, to read out what you\'ve wrote.
+    Two, to clear what you\'ve wrote.
+    Three, to go back to main page.
+    Four, to repeat the instructions.</string>
+    <string name="mail_cc_tts">Mail CC page.
+    Clicking on the button at the bottom left, you can read out the recipient\'s CC, using the button on the bottom right, you can say the commands. Say:
+    One, to read out what you\'ve wrote.
+    Two, to clear what you\'ve wrote.
+    Three, to go back to main page.
+    Four, to repeat the instructions.
+    </string>
+    <string name="mail_body_tts">Mail Body page.
+    Clicking on the button at the bottom left, you can read out the message body, using the button on the bottom right, you can say the commands. Say:
+    One, to read out what you\'ve wrote.
+    Two, to clear what you\'ve wrote.
+    Three, to go back to main page.
+    Four, to repeat the instructions.</string>
+
+    <string name="mail_summarysend_tts">Mail Summary-Send page.
+    Clicking on the button at the bottom center, Say:
+    One, to read out the summary of your mail.
+    Two, to clear all mail information.
+    Three, to send mail.
+    Four, to repeat the instructions.
+    Five, to go back to home page.
+    </string>
+    <string name="unknown_command">Unknown command</string>
 </resources>

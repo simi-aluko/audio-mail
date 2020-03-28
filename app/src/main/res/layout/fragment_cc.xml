@@ -15,14 +15,7 @@
         android:textColor="@color/colorPrimaryDark"
         android:textSize="30sp"
         android:layout_marginTop="10dp"/>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/mail_cc_explanation"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="15dp"
-        android:textColor="@color/dark_blue"
-        android:fontFamily="@font/cera_round_pro_bold"/>
+
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -31,6 +24,35 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
+
+            <EditText
+                android:id="@+id/mail_cc_edittext"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/message_body_background"
+                android:lines="1"
+                android:textSize="20sp"
+                android:paddingStart="20dp"
+                android:paddingEnd="10dp"
+                android:paddingTop="15dp"
+                android:paddingBottom="15dp"
+                android:fontFamily="@font/cera_round_pro_medium"
+                android:layout_marginTop="30dp"
+                android:hint="@string/speak_the_mail_s_cc_address"
+                android:textColor="@color/colorPrimaryDark"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/light_grey"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="10dp"
+                />
+
+            <TextView
+                style="@style/page_instruction_style"
+                android:text="@string/mail_cc_explanation"
+                />
 
             <TextView
                 android:layout_width="match_parent"

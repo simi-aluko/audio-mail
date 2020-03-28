@@ -6,20 +6,27 @@ import android.content.Intent
 import android.os.Bundle
 import android.speech.RecognizerIntent
 import android.speech.tts.TextToSpeech
+import android.speech.tts.UtteranceProgressListener
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import kotlinx.android.synthetic.main.fragment_home.*
 import org.jetbrains.anko.support.v4.toast
+import org.w3c.dom.Text
 import java.util.*
 
 /**
  * A simple [Fragment] subclass.
  */
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(), TextToSpeech.OnInitListener, View.OnClickListener {
+    lateinit var homeFragmentViewModel : MainActivityViewModel
     lateinit var textToSpeech: TextToSpeech
+    private val speechToTextRequestCode = 1
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,45 +37,100 @@ class HomeFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-       /* textToSpeech = TextToSpeech(context, TextToSpeech.OnInitListener { status ->
-                if(status != TextToSpeech.ERROR){
-                    val result = textToSpeech.setLanguage(Locale.US)
-                    if(result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED){
-                        Log.e("simi_TTS", "$result language not supported")
-                    }
-                    textToSpeech.speak("Hello Stephanie", TextToSpeech.QUEUE_FLUSH, null)
-                }else{
-                    Log.e("Simi_TTS", "$status initialisation failed")
-                }
-            })*/
-        val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
-        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
-        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault())
-
-        if(intent.resolveActivity(activity!!.packageManager) != null){
-            startActivityForResult(intent, 10)
-        }else toast("doesnt support speech input").show()
-
+        homeFragmentViewModel = ViewModelProvider(this)[MainActivityViewModel::class.java]
+        commands_btn.setOnClickListener(this)
+        setUpViewModel()
     }
-
-/*    override fun onDestroy() {
-        if(textToSpeech != null){
-            textToSpeech.stop()
-            textToSpeech.shutdown()
-        }
-        super.onDestroy()
-    }*/
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
         when(requestCode){
-            10 -> {
+            speechToTextRequestCode -> {
                 if(resultCode == Activity.RESULT_OK && data != null){
                     val results = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)
-                    if(results!=null) toast(results[0]).show()
+                    if(results!=null) {
+                        when(results[0]){
+                            "1","one" -> {
+                                val action = HomeFragmentDirections.recipientNavigation()
+                                findNavController().navigate(action)
+                            }
+                            "2","to","two","too" -> {
+                                val action = HomeFragmentDirections.ccNavigation()
+                                findNavController().navigate(action)
+                            }
+                            "3","three","tree" -> {
+                                val action = HomeFragmentDirections.mailBodyNavigation()
+                                findNavController().navigate(action)
+                            }
+                            "4","four","for" -> {
+                                val action = HomeFragmentDirections.summarySendNavigation()
+                                findNavController().navigate(action)
+                            }
+                            "5","five" -> homeFragmentViewModel.homeFragmentTextToBeSpoken.value = getString(R.string.home_tts)
+                            else -> {
+                                homeFragmentViewModel.homeFragmentTextToBeSpoken.value = getString(R.string.unknown_command)
+                            }
+                        }
+                    }
                 }
             }
         }
     }
+
+
+    private fun callSpeechToText(){
+        val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault())
+
+        if(intent.resolveActivity(activity!!.packageManager) != null){
+            startActivityForResult(intent, speechToTextRequestCode)
+        }else toast("Your device doesn't support speech input").show()
+    }
+
+    override fun onInit(status: Int) {
+        if(status != TextToSpeech.ERROR){
+            val result = textToSpeech.setLanguage(Locale.US)
+            if(result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED){
+                Log.e(tag, "$result language not supported")
+            }else {
+                val textToSpeak = homeFragmentViewModel.homeFragmentTextToBeSpoken.value
+                if (textToSpeak != null) textToSpeech.speak(textToSpeak, TextToSpeech.QUEUE_FLUSH, null, null)
+            }
+        }else{
+            Log.e(tag, "$status initialisation failed")
+        }
+    }
+
+    override fun onDestroy() {
+        if(::textToSpeech.isInitialized){
+            textToSpeech.stop()
+            textToSpeech.shutdown()
+        }
+        super.onDestroy()
+    }
+
+    override fun onPause() {
+        if(::textToSpeech.isInitialized){
+            textToSpeech.stop()
+            textToSpeech.shutdown()
+        }
+        super.onPause()
+    }
+
+    override fun onClick(v: View?) {
+        when(v?.id){
+            commands_btn.id -> {
+                callSpeechToText()
+            }
+        }
+    }
+
+    private fun setUpViewModel(){
+        homeFragmentViewModel.homeFragmentTextToBeSpoken.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+            textToSpeech = TextToSpeech(context, this)
+        })
+    }
+
 }
