@@ -3,6 +3,7 @@
     xmlns:dist="http://schemas.android.com/apk/distribution"
     package="com.simileoluwaaluko.audiomail">
 
+    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
     <dist:module dist:instant="true" />
 
     <application
