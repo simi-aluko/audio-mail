@@ -1,7 +1,9 @@
 package com.simileoluwaaluko.audiomail
 
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.simileoluwaaluko.audiomail.mainActivity.MainActivity
 import org.jetbrains.anko.startActivity
 
 class SplashScreenActivity : AppCompatActivity() {
@@ -12,7 +14,9 @@ class SplashScreenActivity : AppCompatActivity() {
         supportActionBar?.hide()
         setContentView(R.layout.activity_splash_screen)
 
-        startActivity<MainActivity>()
+        val firstRunPrefs = getSharedPreferences(getString(R.string.first_run_prefs), Context.MODE_PRIVATE)
+        if(firstRunPrefs.getBoolean(getString(R.string.firstrun), false)) startActivity<MainActivity>()
+        else startActivity<RegisterActivity>()
         finish()
     }
 }

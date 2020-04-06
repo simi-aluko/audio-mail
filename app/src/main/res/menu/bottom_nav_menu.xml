@@ -6,9 +6,9 @@
     <item android:id="@+id/recipientFragment"
         android:icon="@drawable/ic_recipient_icon"
         android:title="@string/recipient" />
-    <item android:id="@+id/CCFragment"
+    <item android:id="@+id/subjectFragment"
         android:icon="@drawable/ic_cc_icon"
-        android:title="@string/cc" />
+        android:title="@string/subject" />
     <item android:id="@+id/mailBodyFragment"
         android:icon="@drawable/ic_email_body_icon"
         android:title="@string/body" />

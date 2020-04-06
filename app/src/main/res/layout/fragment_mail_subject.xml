@@ -3,18 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CCFragment"
+    tools:context=".fragments.SubjectFragment"
     android:orientation="vertical"
     android:padding="23dp">
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/mail_cc"
-        android:fontFamily="@font/cera_round_pro_black"
-        android:textColor="@color/colorPrimaryDark"
-        android:textSize="30sp"
-        android:layout_marginTop="10dp"/>
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -39,7 +30,7 @@
                 android:paddingBottom="15dp"
                 android:fontFamily="@font/cera_round_pro_medium"
                 android:layout_marginTop="30dp"
-                android:hint="@string/speak_the_mail_s_cc_address"
+                android:hint="@string/speak_the_mail_s_subject"
                 android:textColor="@color/colorPrimaryDark"/>
             <View
                 android:layout_width="match_parent"
@@ -51,7 +42,7 @@
 
             <TextView
                 style="@style/page_instruction_style"
-                android:text="@string/mail_cc_explanation"
+                android:text="@string/mail_subject_explanation"
                 />
 
             <TextView
@@ -63,7 +54,7 @@
                 android:drawablePadding="15dp"
                 android:fontFamily="@font/cera_round_pro_regular"
                 android:gravity="center_vertical"
-                android:text="@string/mail_cc_instruction_one"
+                android:text="@string/mail_subject_instruction_one"
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="17sp" />
 
@@ -73,7 +64,7 @@
                 android:drawableStart="@drawable/ic_two"
                 android:layout_marginTop="15dp"
                 android:layout_marginBottom="10dp"
-                android:text="@string/mail_cc_instruction_two"
+                android:text="@string/mail_subject_instruction_two"
                 android:gravity="center_vertical"
                 android:drawablePadding="15dp"
                 android:textSize="17sp"
@@ -89,7 +80,7 @@
                 android:drawablePadding="15dp"
                 android:fontFamily="@font/cera_round_pro_regular"
                 android:gravity="center_vertical"
-                android:text="@string/mail_cc_instruction_three"
+                android:text="@string/mail_subject_instruction_three"
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="17sp" />
             <TextView
@@ -100,7 +91,7 @@
                 android:drawableStart="@drawable/ic_four"
                 android:drawablePadding="15dp"
                 android:gravity="center_vertical"
-                android:text="@string/mail_cc_instruction_four"
+                android:text="@string/mail_subject_instruction_four"
                 android:textSize="17sp"
                 android:textColor="@color/colorPrimaryDark"
                 android:fontFamily="@font/cera_round_pro_regular"/>

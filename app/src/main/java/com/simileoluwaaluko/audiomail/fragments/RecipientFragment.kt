@@ -1,4 +1,4 @@
-package com.simileoluwaaluko.audiomail
+package com.simileoluwaaluko.audiomail.fragments
 
 
 import android.app.Activity
@@ -14,6 +14,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import com.simileoluwaaluko.audiomail.mainActivity.MainActivityViewModel
+import com.simileoluwaaluko.audiomail.R
+import com.simileoluwaaluko.audiomail.fragments.RecipientFragmentDirections
+import com.simileoluwaaluko.audiomail.mainActivity.MainActivity
 import kotlinx.android.synthetic.main.fragment_recipient.*
 import org.jetbrains.anko.support.v4.toast
 import java.util.*
@@ -37,6 +41,7 @@ class RecipientFragment : Fragment(), View.OnClickListener, TextToSpeech.OnInitL
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        (activity as MainActivity).supportActionBar?.title = getString(R.string.mail_recipient)
         recipient_read_out_button.setOnClickListener(this)
         recipient_instruction_button.setOnClickListener(this)
         setUpLiveData()
@@ -124,13 +129,18 @@ class RecipientFragment : Fragment(), View.OnClickListener, TextToSpeech.OnInitL
                 recipientFragmentViewModel.recipientFragmentTextToBeSpoken.value = "Recipient's address has been cleared."
             }
             "3","three","tree" -> {
-                val action = RecipientFragmentDirections.backNavigation()
+                val action =
+                    RecipientFragmentDirections.nextNavigation()
                 findNavController().navigate(action)
             }
             "4","four","for" -> {
-                recipientFragmentViewModel.recipientFragmentTextToBeSpoken.value = getString(R.string.mail_recipient_tts)
+                recipientFragmentViewModel.recipientFragmentTextToBeSpoken.value = getString(
+                    R.string.mail_recipient_tts
+                )
             }
-            else -> recipientFragmentViewModel.recipientFragmentTextToBeSpoken.value = getString(R.string.unknown_command)
+            else -> recipientFragmentViewModel.recipientFragmentTextToBeSpoken.value = getString(
+                R.string.unknown_command
+            )
         }
     }
 

@@ -1,9 +1,9 @@
-package com.simileoluwaaluko.audiomail
+package com.simileoluwaaluko.audiomail.mainActivity
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import com.simileoluwaaluko.audiomail.R
 
 /**
  * Created by The Awesome Simileoluwa Aluko on 2020-03-28.
@@ -12,12 +12,12 @@ class MainActivityViewModel(application: Application) : AndroidViewModel(applica
     val homeFragmentTextToBeSpoken = MutableLiveData(application.getString(R.string.home_tts))
     val recipientFragmentTextToBeSpoken = MutableLiveData(application.getString(R.string.mail_recipient_tts))
     val mailBodyFragmentTextToBeSpoken = MutableLiveData(application.getString(R.string.mail_body_tts))
-    val ccFragmentTextToBeSpoken = MutableLiveData(application.getString(R.string.mail_cc_tts))
+    val subjectFragmentTextToBeSpoken = MutableLiveData(application.getString(R.string.mail_subject_tts))
     val summarySendFragmentTextToBeSpoken = MutableLiveData(application.getString(R.string.mail_summarysend_tts))
 
 
     val mailRecipientAddress = MutableLiveData<String>()
-    val mailCCAddress = MutableLiveData<String>()
+    val mailSubject = MutableLiveData<String>()
     val mailBody = MutableLiveData("")
 
 }

@@ -1,4 +1,4 @@
-package com.simileoluwaaluko.audiomail
+package com.simileoluwaaluko.audiomail.fragments
 
 
 import android.app.Activity
@@ -6,18 +6,19 @@ import android.content.Intent
 import android.os.Bundle
 import android.speech.RecognizerIntent
 import android.speech.tts.TextToSpeech
-import android.speech.tts.UtteranceProgressListener
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.simileoluwaaluko.audiomail.fragments.HomeFragmentDirections
+import com.simileoluwaaluko.audiomail.mainActivity.MainActivityViewModel
+import com.simileoluwaaluko.audiomail.R
+import com.simileoluwaaluko.audiomail.mainActivity.MainActivity
 import kotlinx.android.synthetic.main.fragment_home.*
 import org.jetbrains.anko.support.v4.toast
-import org.w3c.dom.Text
 import java.util.*
 
 /**
@@ -37,6 +38,7 @@ class HomeFragment : Fragment(), TextToSpeech.OnInitListener, View.OnClickListen
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        (activity as MainActivity).supportActionBar?.title = getString(R.string.welcome_)
         homeFragmentViewModel = ViewModelProvider(this)[MainActivityViewModel::class.java]
         commands_btn.setOnClickListener(this)
         setUpViewModel()
@@ -52,24 +54,32 @@ class HomeFragment : Fragment(), TextToSpeech.OnInitListener, View.OnClickListen
                     if(results!=null) {
                         when(results[0]){
                             "1","one" -> {
-                                val action = HomeFragmentDirections.recipientNavigation()
+                                val action =
+                                    HomeFragmentDirections.recipientNavigation()
                                 findNavController().navigate(action)
                             }
                             "2","to","two","too" -> {
-                                val action = HomeFragmentDirections.ccNavigation()
+                                val action =
+                                    HomeFragmentDirections.ccNavigation()
                                 findNavController().navigate(action)
                             }
                             "3","three","tree" -> {
-                                val action = HomeFragmentDirections.mailBodyNavigation()
+                                val action =
+                                    HomeFragmentDirections.mailBodyNavigation()
                                 findNavController().navigate(action)
                             }
                             "4","four","for" -> {
-                                val action = HomeFragmentDirections.summarySendNavigation()
+                                val action =
+                                    HomeFragmentDirections.summarySendNavigation()
                                 findNavController().navigate(action)
                             }
-                            "5","five" -> homeFragmentViewModel.homeFragmentTextToBeSpoken.value = getString(R.string.home_tts)
+                            "5","five" -> homeFragmentViewModel.homeFragmentTextToBeSpoken.value = getString(
+                                R.string.home_tts
+                            )
                             else -> {
-                                homeFragmentViewModel.homeFragmentTextToBeSpoken.value = getString(R.string.unknown_command)
+                                homeFragmentViewModel.homeFragmentTextToBeSpoken.value = getString(
+                                    R.string.unknown_command
+                                )
                             }
                         }
                     }

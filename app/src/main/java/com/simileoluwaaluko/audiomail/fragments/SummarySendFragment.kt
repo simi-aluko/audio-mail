@@ -1,23 +1,41 @@
-package com.simileoluwaaluko.audiomail
+package com.simileoluwaaluko.audiomail.fragments
 
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.speech.RecognizerIntent
 import android.speech.tts.TextToSpeech
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
-import androidx.navigation.Navigation.findNavController
 import androidx.navigation.fragment.findNavController
+import com.simileoluwaaluko.audiomail.Constants.sendingHost
+import com.simileoluwaaluko.audiomail.Constants.sendingPort
+import com.simileoluwaaluko.audiomail.mainActivity.MainActivityViewModel
+import com.simileoluwaaluko.audiomail.R
+import com.simileoluwaaluko.audiomail.fragments.SummarySendFragmentDirections
+import com.simileoluwaaluko.audiomail.mainActivity.MainActivity
 import kotlinx.android.synthetic.main.fragment_summary_send.*
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import org.jetbrains.anko.support.v4.runOnUiThread
 import org.jetbrains.anko.support.v4.toast
+import org.jetbrains.anko.toast
 import java.util.*
+import javax.mail.Message
+import javax.mail.MessagingException
+import javax.mail.Session
+import javax.mail.Transport
+import javax.mail.internet.AddressException
+import javax.mail.internet.InternetAddress
+import javax.mail.internet.MimeMessage
+
 
 /**
  * A simple [Fragment] subclass.
@@ -37,6 +55,7 @@ class SummarySendFragment : Fragment(),View.OnClickListener, TextToSpeech.OnInit
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        (activity as MainActivity).supportActionBar?.title = getString(R.string.mail_summarysend)
         summarysend_instruction_button.setOnClickListener(this)
         setUpLiveData()
     }
@@ -50,8 +69,8 @@ class SummarySendFragment : Fragment(),View.OnClickListener, TextToSpeech.OnInit
             summary_recipient.setText(it)
         })
 
-        summarySendFragmentViewModel.mailCCAddress.observe(viewLifecycleOwner, Observer {
-            summary_cc.setText(it)
+        summarySendFragmentViewModel.mailSubject.observe(viewLifecycleOwner, Observer {
+            summary_subject.setText(it)
         })
 
         summarySendFragmentViewModel.mailBody.observe(viewLifecycleOwner, Observer {
@@ -112,7 +131,7 @@ class SummarySendFragment : Fragment(),View.OnClickListener, TextToSpeech.OnInit
         when(spokenText){
             "1","one" -> {
                 var recipient = summary_recipient.text.toString()
-                var cc = summary_cc.text.toString()
+                var cc = summary_subject.text.toString()
                 var body = summary_body.text.toString()
 
                 if(recipient.isEmpty()) recipient = "empty"
@@ -128,21 +147,26 @@ class SummarySendFragment : Fragment(),View.OnClickListener, TextToSpeech.OnInit
             }
             "2","to","two","too" -> {
                 summarySendFragmentViewModel.mailRecipientAddress.value = ""
-                summarySendFragmentViewModel.mailCCAddress.value = ""
+                summarySendFragmentViewModel.mailSubject.value = ""
                 summarySendFragmentViewModel.mailBody.value = ""
                 summarySendFragmentViewModel.summarySendFragmentTextToBeSpoken.value = "Mail has been cleared."
             }
             "3","three","tree" -> {
-                toast("sending mail").show()
+                sendMail()
             }
             "4","four","for" -> {
-                summarySendFragmentViewModel.summarySendFragmentTextToBeSpoken.value = getString(R.string.mail_summarysend_tts)
+                summarySendFragmentViewModel.summarySendFragmentTextToBeSpoken.value = getString(
+                    R.string.mail_summarysend_tts
+                )
             }
             "5", "five" -> {
-                val action = SummarySendFragmentDirections.backNavigation()
+                val action =
+                    SummarySendFragmentDirections.backNavigation()
                 findNavController().navigate(action)
             }
-            else -> summarySendFragmentViewModel.summarySendFragmentTextToBeSpoken.value = getString(R.string.unknown_command)
+            else -> summarySendFragmentViewModel.summarySendFragmentTextToBeSpoken.value = getString(
+                R.string.unknown_command
+            )
         }
     }
 
@@ -160,5 +184,81 @@ class SummarySendFragment : Fragment(),View.OnClickListener, TextToSpeech.OnInit
             textToSpeech.shutdown()
         }
         super.onPause()
+    }
+
+    private fun sendMail(){
+        val emailAddress = summary_recipient.text.toString().trim()
+        val mailBody = summary_body.text.toString().trim()
+        val mailSubject = summary_subject.text.toString().trim()
+
+        if(emailAddress.isNotEmpty() && mailBody.isNotEmpty() && mailSubject.isNotEmpty()){
+            context?.let {
+                val credentialsSharedPrefs = it.getSharedPreferences(getString(R.string.gmail_credentials_shared_prefs), Context.MODE_PRIVATE)
+                val userName = credentialsSharedPrefs.getString(getString(R.string.gmailaddress), "")
+                val password = credentialsSharedPrefs.getString(getString(R.string.gmailpassword), "")
+
+                if(userName != null && password != null){
+                    GlobalScope.launch {
+                        sendMail(userName, emailAddress, mailSubject, mailBody, password)
+                    }
+                }else{
+                    summarySendFragmentViewModel.summarySendFragmentTextToBeSpoken.value = "Unable to Send mail, update credentials"
+                }
+            }
+        }else{
+            summarySendFragmentViewModel.summarySendFragmentTextToBeSpoken.value = "Unable to send mail, No field in mail should be empty."
+        }
+    }
+
+    private suspend fun sendMail(userName : String, to : String, subject : String, text : String, password : String){
+        val props = Properties()
+        props.put("mail.smtp.host", sendingHost)
+        props.put("mail.smtp.port", sendingPort.toShort())
+        props.put("mail.smtp.user", userName)
+        props.put("mail.smtp.password", password)
+        props.put("mail.smtp.auth", "true")
+
+        val session1 = Session.getDefaultInstance(props)
+        val simpleMessage = MimeMessage(session1)
+
+        var fromAddress : InternetAddress? = null
+        var toAddress : InternetAddress? = null
+
+        try {
+            fromAddress = InternetAddress(userName)
+            toAddress = InternetAddress(to)
+        }catch (e : AddressException){
+            e.printStackTrace()
+            summarySendFragmentViewModel.summarySendFragmentTextToBeSpoken.value = "Sending mail failed!"
+        }
+
+        try {
+            simpleMessage.setFrom(fromAddress)
+            simpleMessage.setRecipient(Message.RecipientType.TO, toAddress)
+            simpleMessage.subject = subject
+            simpleMessage.setText(text)
+
+            val transport: Transport = session1.getTransport("smtps")
+
+            transport.connect(sendingHost, sendingPort, userName, password)
+            transport.sendMessage(simpleMessage, simpleMessage.allRecipients)
+            transport.close()
+            runOnUiThread {
+                summarySendFragmentViewModel.summarySendFragmentTextToBeSpoken.value = "Mail Sent successfully."
+                toast("Mail Sent successfully.").show()
+                summary_recipient.setText("")
+                summary_body.setText("")
+                summary_subject.setText("")
+                summarySendFragmentViewModel.mailRecipientAddress.value = ""
+                summarySendFragmentViewModel.mailSubject.value = ""
+                summarySendFragmentViewModel.mailBody.value = ""
+            }
+        }catch (e : MessagingException){
+            e.printStackTrace()
+            runOnUiThread {
+                summarySendFragmentViewModel.summarySendFragmentTextToBeSpoken.value = "Sending mail failed!"
+                toast("Sending mail failed!").show()
+            }
+        }
     }
 }

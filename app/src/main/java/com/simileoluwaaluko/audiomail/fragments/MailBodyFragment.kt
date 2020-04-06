@@ -1,21 +1,23 @@
-package com.simileoluwaaluko.audiomail
+package com.simileoluwaaluko.audiomail.fragments
 
 
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
 import android.speech.RecognizerIntent
 import android.speech.tts.TextToSpeech
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import com.simileoluwaaluko.audiomail.fragments.MailBodyFragmentDirections
+import com.simileoluwaaluko.audiomail.mainActivity.MainActivityViewModel
+import com.simileoluwaaluko.audiomail.R
+import com.simileoluwaaluko.audiomail.mainActivity.MainActivity
 import kotlinx.android.synthetic.main.fragment_mail_body.*
 import org.jetbrains.anko.support.v4.toast
 import java.util.*
@@ -40,6 +42,7 @@ class MailBodyFragment : Fragment(), View.OnClickListener, TextToSpeech.OnInitLi
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        (activity as MainActivity).supportActionBar?.title = getString(R.string.mail_body)
         body_read_out_button.setOnClickListener(this)
         body_instruction_button.setOnClickListener(this)
         setUpLiveData()
@@ -136,13 +139,18 @@ class MailBodyFragment : Fragment(), View.OnClickListener, TextToSpeech.OnInitLi
                 mailBodyFragmentViewModel.mailBodyFragmentTextToBeSpoken.value = "Mail's body has been cleared."
             }
             "3","three","tree" -> {
-                val action = MailBodyFragmentDirections.backNavigation()
+                val action =
+                    MailBodyFragmentDirections.nextNavigation()
                 findNavController().navigate(action)
             }
             "4","four","for" -> {
-                mailBodyFragmentViewModel.mailBodyFragmentTextToBeSpoken.value = getString(R.string.mail_body_tts)
+                mailBodyFragmentViewModel.mailBodyFragmentTextToBeSpoken.value = getString(
+                    R.string.mail_body_tts
+                )
             }
-            else -> mailBodyFragmentViewModel.mailBodyFragmentTextToBeSpoken.value = getString(R.string.unknown_command)
+            else -> mailBodyFragmentViewModel.mailBodyFragmentTextToBeSpoken.value = getString(
+                R.string.unknown_command
+            )
         }
     }
 

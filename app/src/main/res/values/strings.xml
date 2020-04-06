@@ -3,42 +3,42 @@
 
     <string name="home">Home</string>
     <string name="recipient">Recipient</string>
-    <string name="cc">CC</string>
+    <string name="subject">Subject</string>
     <string name="send">Send</string>
     <string name="body">Body</string>
     <string name="command_button">command button</string>
 
-<!--     Home-->
-    <string name="welcome_">Welcome,</string>
+    <!--     Home-->
+    <string name="welcome_">Welcome</string>
     <string name="home_explanation_header">AudioMail helps you send mails completely via audio. To begin, click on the button at the bottom center, and say:</string>
     <string name="home_instruction_one"><b>One</b>, to enter Recipients Address.</string>
-    <string name="home_instruction_two"><b>Two</b>, to enter the Carbon Copy\'s Address.</string>
+    <string name="home_instruction_two"><b>Two</b>, to enter the Mail subject</string>
     <string name="home_instruction_three"><b>Three</b>, to enter the Message Body.</string>
     <string name="home_instruction_four"><b>Four</b>, to see the mail summary and send the mail.</string>
     <string name="home_instruction_five"><b>Five</b>, to repeat the instructions.</string>
 
-<!--    Mail Recipient-->
+    <!--    Mail Recipient-->
     <string name="mail_recipient">Mail Recipient</string>
     <string name="mail_recipient_explanation">Clicking on the button at the bottom left, you can read out the recipient\'s address, clicking on the button on the bottom right, you can say the commands. Say:</string>
     <string name="mail_recipient_instruction_one"><b>One</b>, to read out what you\'ve wrote.</string>
     <string name="mail_recipient_instruction_two"><b>Two</b>, to clear what you\'ve wrote.</string>
-    <string name="mail_recipient_instruction_three"><b>Three</b>, to go back to main page.</string>
+    <string name="mail_recipient_instruction_three"><b>Three</b>, to go to the next section.</string>
     <string name="mail_recipient_instruction_four"><b>Four</b>, to repeat the instructions.</string>
 
-    <!--    Mail CC-->
-    <string name="mail_cc">Mail CC</string>
-    <string name="mail_cc_explanation">Clicking on the button at the bottom left, you can read out the recipient\'s CC, clicking on the button on the bottom right, you can say the commands. Say:</string>
-    <string name="mail_cc_instruction_one"><b>One</b>, to read out what you\'ve wrote.</string>
-    <string name="mail_cc_instruction_two"><b>Two</b>, to clear what you\'ve wrote.</string>
-    <string name="mail_cc_instruction_three"><b>Three</b>, to go back to main page.</string>
-    <string name="mail_cc_instruction_four"><b>Four</b>, to repeat the instructions.</string>
+    <!--    Mail Subject-->
+    <string name="mail_subject">Mail Subject</string>
+    <string name="mail_subject_explanation">Clicking on the button at the bottom left, you can read out the mail subject, clicking on the button on the bottom right, you can say the commands. Say:</string>
+    <string name="mail_subject_instruction_one"><b>One</b>, to read out what you\'ve wrote.</string>
+    <string name="mail_subject_instruction_two"><b>Two</b>, to clear what you\'ve wrote.</string>
+    <string name="mail_subject_instruction_three"><b>Three</b>, to go to the next section.</string>
+    <string name="mail_subject_instruction_four"><b>Four</b>, to repeat the instructions.</string>
 
     <!--    Mail Body-->
     <string name="mail_body">Mail Body</string>
     <string name="mail_body_explanation">Clicking on the button at the bottom left, you can read out the message body, clicking on the button on the bottom right, you can say the commands. Say:</string>
     <string name="mail_body_instruction_one"><b>One</b>, to read out what you\'ve wrote.</string>
     <string name="mail_body_instruction_two"><b>Two</b>, to clear what you\'ve wrote.</string>
-    <string name="mail_body_instruction_three"><b>Three</b>, to go back to main page.</string>
+    <string name="mail_body_instruction_three"><b>Three</b>, to go to the next section.</string>
     <string name="mail_body_instruction_four"><b>Four</b>, to repeat the instructions.</string>
 
     <!--    Mail Summary Send-->
@@ -52,7 +52,7 @@
 
 
     <string name="speak_the_recipient_s_address">Speak the recipient\'s address</string>
-    <string name="speak_the_mail_s_cc_address">Speak the mail\'s cc address</string>
+    <string name="speak_the_mail_s_subject">Speak the mail subject</string>
     <string name="speak_the_mail_body">Speak the Mail body</string>
 
 
@@ -73,8 +73,8 @@
     Two, to clear what you\'ve wrote.
     Three, to go back to main page.
     Four, to repeat the instructions.</string>
-    <string name="mail_cc_tts">Mail CC page.
-    Clicking on the button at the bottom left, you can read out the recipient\'s CC, using the button on the bottom right, you can say the commands. Say:
+    <string name="mail_subject_tts">Mail Subject page.
+    Clicking on the button at the bottom left, you can read out the mail subject, using the button on the bottom right, you can say the commands. Say:
     One, to read out what you\'ve wrote.
     Two, to clear what you\'ve wrote.
     Three, to go back to main page.
@@ -96,4 +96,14 @@
     Five, to go back to home page.
     </string>
     <string name="unknown_command">Unknown command</string>
+    <string name="register_title">Register your Gmail account</string>
+    <string name="gmail_address">Gmail address</string>
+    <string name="password">Password</string>
+    <string name="save">Save</string>
+    <string name="first_run_prefs">first_run_prefs</string>
+    <string name="gmail_credentials_shared_prefs">gmail_credentials_shared_prefs</string>
+    <string name="firstrun">firstrun</string>
+    <string name="edit_gmail_credentials">Edit Gmail Credentials</string>
+    <string name="gmailaddress">gmailaddress</string>
+    <string name="gmailpassword">gmailpassword</string>
 </resources>

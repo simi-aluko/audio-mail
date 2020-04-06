@@ -3,7 +3,9 @@
     xmlns:dist="http://schemas.android.com/apk/distribution"
     package="com.simileoluwaaluko.audiomail">
 
-    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <dist:module dist:instant="true" />
 
     <application
@@ -13,6 +15,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".inbox.InboxActivity"></activity>
+        <activity android:name=".RegisterActivity" />
         <activity
             android:name=".SplashScreenActivity"
             android:theme="@style/splashScreenTheme">
@@ -22,8 +26,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity">
-        </activity>
+        <activity android:name=".mainActivity.MainActivity"></activity>
     </application>
 
 </manifest>

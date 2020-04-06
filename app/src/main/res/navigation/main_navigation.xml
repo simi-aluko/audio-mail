@@ -8,7 +8,7 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.simileoluwaaluko.audiomail.HomeFragment"
+        android:name="com.simileoluwaaluko.audiomail.fragments.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home">
 
@@ -16,7 +16,7 @@
             app:destination="@+id/recipientFragment"/>
 
         <action android:id="@+id/cc_navigation"
-            app:destination="@+id/CCFragment"/>
+            app:destination="@+id/subjectFragment"/>
 
         <action android:id="@+id/mail_body_navigation"
             app:destination="@+id/mailBodyFragment" />
@@ -27,32 +27,33 @@
     </fragment>
 
     <fragment
-        android:id="@+id/CCFragment"
-        android:name="com.simileoluwaaluko.audiomail.CCFragment"
+        android:id="@+id/subjectFragment"
+        android:name="com.simileoluwaaluko.audiomail.fragments.SubjectFragment"
         android:label="fragment_cc"
-        tools:layout="@layout/fragment_cc">
-        <action android:id="@+id/back_navigation"
-            app:destination="@+id/homeFragment"/>
+        tools:layout="@layout/fragment_mail_subject">
+        <action android:id="@+id/next_navigation"
+            app:destination="@+id/mailBodyFragment"/>
     </fragment>
     <fragment
         android:id="@+id/mailBodyFragment"
-        android:name="com.simileoluwaaluko.audiomail.MailBodyFragment"
+        android:name="com.simileoluwaaluko.audiomail.fragments.MailBodyFragment"
         android:label="fragment_mail_body"
         tools:layout="@layout/fragment_mail_body">
-        <action android:id="@+id/back_navigation"
-            app:destination="@+id/homeFragment"/>
+
+        <action android:id="@+id/next_navigation"
+            app:destination="@+id/summarySendFragment"/>
     </fragment>
     <fragment
         android:id="@+id/recipientFragment"
-        android:name="com.simileoluwaaluko.audiomail.RecipientFragment"
+        android:name="com.simileoluwaaluko.audiomail.fragments.RecipientFragment"
         android:label="fragment_recipient"
         tools:layout="@layout/fragment_recipient">
-        <action android:id="@+id/back_navigation"
-            app:destination="@+id/homeFragment"/>
+        <action android:id="@+id/next_navigation"
+            app:destination="@+id/subjectFragment"/>
     </fragment>
     <fragment
         android:id="@+id/summarySendFragment"
-        android:name="com.simileoluwaaluko.audiomail.SummarySendFragment"
+        android:name="com.simileoluwaaluko.audiomail.fragments.SummarySendFragment"
         android:label="fragment_summary_send"
         tools:layout="@layout/fragment_summary_send">
         <action android:id="@+id/back_navigation"
