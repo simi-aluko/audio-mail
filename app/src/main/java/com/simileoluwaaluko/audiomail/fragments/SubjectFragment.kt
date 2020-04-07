@@ -16,7 +16,6 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.simileoluwaaluko.audiomail.mainActivity.MainActivityViewModel
 import com.simileoluwaaluko.audiomail.R
-import com.simileoluwaaluko.audiomail.fragments.SubjectFragmentDirections
 import com.simileoluwaaluko.audiomail.mainActivity.MainActivity
 import kotlinx.android.synthetic.main.fragment_mail_subject.*
 import org.jetbrains.anko.support.v4.toast
@@ -27,7 +26,7 @@ import java.util.*
  */
 class SubjectFragment : Fragment(), View.OnClickListener, TextToSpeech.OnInitListener {
 
-    private val ccFragmentViewModel: MainActivityViewModel by activityViewModels()
+    private val subjectFragmentViewModel: MainActivityViewModel by activityViewModels()
     lateinit var textToSpeech: TextToSpeech
     private val instructionRequest = 1
     private val readOutRequest = 2
@@ -43,28 +42,28 @@ class SubjectFragment : Fragment(), View.OnClickListener, TextToSpeech.OnInitLis
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         (activity as MainActivity).supportActionBar?.title = getString(R.string.mail_subject)
-        cc_read_out_button.setOnClickListener(this)
-        cc_instruction_button.setOnClickListener(this)
+        subject_read_out_button.setOnClickListener(this)
+        subject_instruction_button.setOnClickListener(this)
         setUpLiveData()
     }
 
     private fun setUpLiveData(){
-        ccFragmentViewModel.subjectFragmentTextToBeSpoken.observe(viewLifecycleOwner, Observer {
+        subjectFragmentViewModel.subjectFragmentTextToBeSpoken.observe(viewLifecycleOwner, Observer {
             textToSpeech = TextToSpeech(context, this)
         })
 
-        ccFragmentViewModel.mailSubject.observe(viewLifecycleOwner, Observer {
-            mail_cc_edittext.setText(it)
+        subjectFragmentViewModel.mailSubject.observe(viewLifecycleOwner, Observer {
+            mail_subject_edittext.setText(it)
         })
     }
 
     override fun onClick(v: View?) {
         when(v?.id){
-            cc_read_out_button.id -> {
+            subject_read_out_button.id -> {
                 callSpeechToText(readOutRequest)
             }
 
-            cc_instruction_button.id -> {
+            subject_instruction_button.id -> {
                 callSpeechToText(instructionRequest)
             }
         }
@@ -86,7 +85,7 @@ class SubjectFragment : Fragment(), View.OnClickListener, TextToSpeech.OnInitLis
             if(result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED){
                 Log.e(tag, "$result language not supported")
             }else {
-                val textToSpeak = ccFragmentViewModel.subjectFragmentTextToBeSpoken.value
+                val textToSpeak = subjectFragmentViewModel.subjectFragmentTextToBeSpoken.value
                 if (textToSpeak != null) textToSpeech.speak(textToSpeak, TextToSpeech.QUEUE_FLUSH, null, null)
             }
         }else{
@@ -121,13 +120,13 @@ class SubjectFragment : Fragment(), View.OnClickListener, TextToSpeech.OnInitLis
     private fun handleInstructionRequestResult(spokenText : String){
         when(spokenText){
             "1","one" -> {
-                val textToSpeak = mail_cc_edittext.text.toString()
-                if(textToSpeak.isNotEmpty()) ccFragmentViewModel.subjectFragmentTextToBeSpoken.value = textToSpeak
-                else ccFragmentViewModel.subjectFragmentTextToBeSpoken.value = "Mail CC's address is empty."
+                val textToSpeak = mail_subject_edittext.text.toString()
+                if(textToSpeak.isNotEmpty()) subjectFragmentViewModel.subjectFragmentTextToBeSpoken.value = textToSpeak
+                else subjectFragmentViewModel.subjectFragmentTextToBeSpoken.value = "Mail subject is empty."
             }
             "2","to","two","too" -> {
-                ccFragmentViewModel.mailSubject.value = ""
-                ccFragmentViewModel.subjectFragmentTextToBeSpoken.value = "Mail CC's address has been cleared."
+                subjectFragmentViewModel.mailSubject.value = ""
+                subjectFragmentViewModel.subjectFragmentTextToBeSpoken.value = "Mail subject has been cleared."
             }
             "3","three","tree" -> {
                 val action =
@@ -135,22 +134,18 @@ class SubjectFragment : Fragment(), View.OnClickListener, TextToSpeech.OnInitLis
                 findNavController().navigate(action)
             }
             "4","four","for" -> {
-                ccFragmentViewModel.subjectFragmentTextToBeSpoken.value = getString(
+                subjectFragmentViewModel.subjectFragmentTextToBeSpoken.value = getString(
                     R.string.mail_subject_tts
                 )
             }
-            else -> ccFragmentViewModel.subjectFragmentTextToBeSpoken.value = getString(
+            else -> subjectFragmentViewModel.subjectFragmentTextToBeSpoken.value = getString(
                 R.string.unknown_command
             )
         }
     }
 
     private fun handleReadOutRequestResult(spokenText: String) {
-        val splittedText = spokenText.split("at")
-        val address = splittedText[0].trim().toLowerCase(Locale.US)
-        val mailProvider = splittedText[1].trim().toLowerCase(Locale.US)
-        val ccAddress = "$address@$mailProvider"
-        ccFragmentViewModel.mailSubject.value = ccAddress
+        subjectFragmentViewModel.mailSubject.value = spokenText
     }
 
     override fun onDestroy() {

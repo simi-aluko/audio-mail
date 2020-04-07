@@ -6,9 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".RegisterActivity"
     android:orientation="vertical"
-    android:paddingStart="25dp"
-    android:paddingEnd="25dp"
-    android:gravity="center">
+    android:padding="25dp">
 
     <TextView
         android:layout_width="match_parent"
@@ -17,7 +15,8 @@
         android:fontFamily="@font/cera_round_pro_black"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="30sp"
-        android:gravity="center" />
+        android:gravity="center"
+        android:layout_marginTop="20dp"/>
 
     <EditText
         android:id="@+id/gmail_address"
@@ -66,4 +65,15 @@
         android:layout_marginTop="50dp"
         android:paddingTop="15dp"
         android:paddingBottom="15dp"/>
+
+    <TextView
+        android:id="@+id/allow_less_secure_apps"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/to_enable_this_app_access_your_mail_follow_this_link_to_grant_access"
+        android:textColor="@color/colorAccent"
+        android:textStyle="bold"
+        android:fontFamily="@font/cera_round_pro_regular"
+        android:layout_gravity="center"
+        android:layout_marginTop="30sp"/>
 </LinearLayout>

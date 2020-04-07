@@ -18,7 +18,7 @@
 
 
             <EditText
-                android:id="@+id/mail_cc_edittext"
+                android:id="@+id/mail_subject_edittext"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/message_body_background"
@@ -108,7 +108,7 @@
             android:layout_weight="1"
             android:gravity="center">
             <ImageView
-                android:id="@+id/cc_read_out_button"
+                android:id="@+id/subject_read_out_button"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
                 android:src="@drawable/ic_record"
@@ -126,7 +126,7 @@
             android:layout_weight="1"
             android:gravity="center">
             <ImageView
-                android:id="@+id/cc_instruction_button"
+                android:id="@+id/subject_instruction_button"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
                 android:src="@drawable/ic_instruction"

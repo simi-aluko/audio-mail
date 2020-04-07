@@ -106,4 +106,5 @@
     <string name="edit_gmail_credentials">Edit Gmail Credentials</string>
     <string name="gmailaddress">gmailaddress</string>
     <string name="gmailpassword">gmailpassword</string>
+    <string name="to_enable_this_app_access_your_mail_follow_this_link_to_grant_access">*To enable this app access your mail, follow this link to grant access.</string>
 </resources>

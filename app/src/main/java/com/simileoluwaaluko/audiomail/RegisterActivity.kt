@@ -1,6 +1,8 @@
 package com.simileoluwaaluko.audiomail
 
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -16,6 +18,7 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener {
         supportActionBar?.hide()
         setContentView(R.layout.activity_register)
         save_btn.setOnClickListener(this)
+        allow_less_secure_apps.setOnClickListener(this)
     }
 
     override fun onClick(v: View?) {
@@ -24,12 +27,16 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener {
                 val gmailAddress = gmail_address.text.trim().toString()
                 val gmailPassword = gmail_password.text.trim().toString()
                 if (validateInputs(gmailAddress, gmailPassword)){
-                    saveCredentials(gmailAddress, gmailPassword)
                     toast("Credentials saved successfully").show()
+                    saveCredentials(gmailAddress, gmailPassword)
                     startActivity<MainActivity>()
                 }else{
                     toast("No inputs should be empty").show()
                 }
+            }
+            allow_less_secure_apps.id -> {
+                val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://myaccount.google.com/lesssecureapps?pli=1"))
+                startActivity(browserIntent)
             }
         }
     }
@@ -51,5 +58,7 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener {
             putBoolean(getString(R.string.firstrun), true)
             apply()
         }
+
+        finish()
     }
 }

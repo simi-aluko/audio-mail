@@ -19,7 +19,9 @@ import javax.mail.Message
 class InboxRecyclerAdapter(var resource : Array<Message>) : RecyclerView.Adapter<InboxRecyclerAdapter.InboxRecyclerViewHolder>() {
 
     class InboxRecyclerViewHolder(view : View) : RecyclerView.ViewHolder(view){
-        val subject = view.find<TextView>(R.id.mail_subject)
+        val subject = view.find<TextView>(R.id.subject)
+        val from = view.find<TextView>(R.id.from)
+        val date = view.find<TextView>(R.id.date)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): InboxRecyclerViewHolder {
@@ -34,7 +36,13 @@ class InboxRecyclerAdapter(var resource : Array<Message>) : RecyclerView.Adapter
 
         CoroutineScope(IO).launch{
             val subject : Deferred<String> = async { resource[position].subject }
-            withContext(Main){holder.subject.text = subject.await()}
+            val date : Deferred<String> = async { resource[position].sentDate.toString() }
+            val from : Deferred<String> = async { resource[position].from[0].toString() }
+            withContext(Main){
+                holder.subject.text = subject.await()
+                holder.date.text = date.await()
+                holder.from.text = from.await()
+            }
         }
     }
 }
