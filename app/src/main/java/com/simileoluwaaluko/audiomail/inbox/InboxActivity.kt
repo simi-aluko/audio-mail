@@ -63,15 +63,15 @@ class InboxActivity : AppCompatActivity() {
 
         }catch (e : Exception){
             e.printStackTrace()
-            runOnUiThread {
-                toast("Unable to fetch mail, update credentials/check internet connection").show()
-            }
+            toast("Unable to fetch mail, update credentials/check internet connection").show()
         }
     }
 
     override fun onDestroy() {
-        folder.close(true)
-        store.close()
+        GlobalScope.launch {
+            folder.close(true)
+            store.close()
+        }
         super.onDestroy()
     }
 }
