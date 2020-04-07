@@ -13,11 +13,12 @@ import kotlinx.coroutines.launch
 import org.jetbrains.anko.toast
 import javax.mail.Folder
 import javax.mail.Session
+import javax.mail.Store
 
 class InboxActivity : AppCompatActivity() {
 
-    lateinit var inboxAdapter : InboxRecyclerAdapter
-    var inboxRecyclerResource = arrayListOf<String>()
+    lateinit var folder : Folder
+    lateinit var store : Store
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,56 +28,50 @@ class InboxActivity : AppCompatActivity() {
         val credentialsSharedPrefs = getSharedPreferences(getString(R.string.gmail_credentials_shared_prefs), Context.MODE_PRIVATE)
         val userName = credentialsSharedPrefs.getString(getString(R.string.gmailaddress), "")
         val password = credentialsSharedPrefs.getString(getString(R.string.gmailpassword), "")
-        Log.d("simi-oc", "here")
         if(userName != null && password != null){
-            Log.d("simi-check", "$userName $password")
-            GlobalScope.launch {
-                recieveMail(userName, password)
-            }
+            recieveMail(userName, password)
         }else{
             toast("Unable to fetch inboxes, update credentials").show()
         }
-
-        inboxAdapter = InboxRecyclerAdapter(inboxRecyclerResource)
-        val inboxLayoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        inboxes.apply {
-            adapter = inboxAdapter
-            layoutManager = inboxLayoutManager
-        }
     }
 
-    private suspend fun recieveMail(userName : String, password : String){
+    private fun recieveMail(userName : String, password : String){
 
-        Log.d("simi-rm", "here")
         val props2 = System.getProperties()
         props2.setProperty("mail.store.protocol", "imaps")
         val session2 = Session.getDefaultInstance(props2, null)
 
         try {
-            Log.d("simi-rm-try", "here")
-            val store = session2.getStore("imaps")
-            store.connect(receivingHost, userName, password)
-            val folder = store.getFolder("INBOX")
-            folder.open(Folder.READ_ONLY)
+            store = session2.getStore("imaps")
 
-            val messages = folder.messages
-            Log.d("simi-rm-mess", messages[0].subject)
-            for (message in messages){
-                inboxRecyclerResource.add(message.subject)
+            GlobalScope.launch {
+                store.connect(receivingHost, userName, password)
+                folder = store.getFolder("INBOX")
+                folder.open(Folder.READ_ONLY)
+                val messages = folder.messages
+
                 runOnUiThread {
-                    inboxAdapter.updateResource(inboxRecyclerResource)
-                    Log.d("simi-inrouit", inboxRecyclerResource.toString())
+                    val inboxAdapter = InboxRecyclerAdapter(messages)
+                    val inboxLayoutManager = LinearLayoutManager(this@InboxActivity, LinearLayoutManager.VERTICAL, false)
+                    inboxes.apply {
+                        adapter = inboxAdapter
+                        layoutManager = inboxLayoutManager
+                    }
                 }
+
             }
-            Log.d("simi-rm-try2", "here")
-            folder.close(true)
-            Log.d("simi-rm-try3", "here")
-            store.close()
+
         }catch (e : Exception){
             e.printStackTrace()
             runOnUiThread {
                 toast("Unable to fetch mail, update credentials/check internet connection").show()
             }
         }
+    }
+
+    override fun onDestroy() {
+        folder.close(true)
+        store.close()
+        super.onDestroy()
     }
 }

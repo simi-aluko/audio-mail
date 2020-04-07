@@ -7,12 +7,16 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.simileoluwaaluko.audiomail.R
+import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.Dispatchers.Main
 import org.jetbrains.anko.find
+import javax.mail.Message
 
 /**
  * Created by The Awesome Simileoluwa Aluko on 2020-04-06.
  */
-class InboxRecyclerAdapter(var resource : ArrayList<String>) : RecyclerView.Adapter<InboxRecyclerAdapter.InboxRecyclerViewHolder>() {
+class InboxRecyclerAdapter(var resource : Array<Message>) : RecyclerView.Adapter<InboxRecyclerAdapter.InboxRecyclerViewHolder>() {
 
     class InboxRecyclerViewHolder(view : View) : RecyclerView.ViewHolder(view){
         val subject = view.find<TextView>(R.id.mail_subject)
@@ -23,18 +27,14 @@ class InboxRecyclerAdapter(var resource : ArrayList<String>) : RecyclerView.Adap
     }
 
     override fun getItemCount(): Int {
-        Log.d("simi-ira", "here")
         return resource.size
     }
 
     override fun onBindViewHolder(holder: InboxRecyclerViewHolder, position: Int) {
-        holder.subject.text = resource[position]
-    }
 
-    fun updateResource(newResource : ArrayList<String>){
-        Log.d("simi-ur", newResource.toString())
-        resource.clear()
-        resource.addAll(newResource)
-        this.notifyDataSetChanged()
+        CoroutineScope(IO).launch{
+            val subject : Deferred<String> = async { resource[position].subject }
+            withContext(Main){holder.subject.text = subject.await()}
+        }
     }
 }
