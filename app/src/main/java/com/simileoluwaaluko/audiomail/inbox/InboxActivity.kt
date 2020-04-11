@@ -94,17 +94,25 @@ class InboxActivity : AppCompatActivity(), View.OnClickListener, TextToSpeech.On
 
                 // accessing the ui in android has to be done on the UIthread or mainthread
                 runOnUiThread {
+
+                    // setting value to textToSpeak livedata makes the app read it out.
                     inboxActivityViewModel.textToSpeak.value =
                         "You have ${messages.size} emails for today!.\n" + getString(R.string.inbox_tts)
+
+                    // create adapter for recycler view
                     val inboxAdapter = InboxRecyclerAdapter(messages)
+                    // create layout manager for recycler view
                     val inboxLayoutManager = LinearLayoutManager(this@InboxActivity, LinearLayoutManager.VERTICAL, false)
+                    // initialise recycler view
                     inboxes.apply {
                         adapter = inboxAdapter
                         layoutManager = inboxLayoutManager
                     }
+                    // set view title text
                     inboxes_no.text = "Inbox for today(${messages.size})"
                 }
             }catch (e : Exception){
+                // if an error occured handle it and tell the user an appropriate message.
                 e.printStackTrace()
                 runOnUiThread {
                     inboxActivityViewModel.textToSpeak.value = "Unable to fetch mail, check gmail credentials/internet connection or something went wrong"
@@ -142,31 +150,47 @@ class InboxActivity : AppCompatActivity(), View.OnClickListener, TextToSpeech.On
         when(v?.id){
             back_arrow.id -> onBackPressed()
             inbox_read_mail_btn.id -> {
+                //stop & shutdown textToSpeech before proceeding. this is done so any thing that is being said atm is stopped.
                 if(::textToSpeech.isInitialized){
                     textToSpeech.stop()
                     textToSpeech.shutdown()
                 }
+
+                // check if messages has arrived before making the button do anything
                 if(::inboxMessages.isInitialized){
+                    // disable button in the interim to prevent incessant clicks
                     inbox_read_mail_btn.isEnabled = false
+
+                    // get first item in inbox array
                     val message = inboxMessages[0]
+
+                    // details in mail message is read on background thread
                     CoroutineScope(Dispatchers.IO).launch{
                         val subject : Deferred<String> = async { message.subject }
                         val from : Deferred<String> = async { message.from[0].toString() }
+                        // communicate with ui on main thread
                         withContext(Main){
                             val textToSpeak = "Mail from: ${from.await()}. The title is ${subject.await()}"
                             inboxActivityViewModel.textToSpeak.value = textToSpeak
+                            // after we have read the first item in the array (denoting the current read out mail) we remove it from the array
+                            // this is done so that the next item in the array becomes the first. So the app can read the next mail to the user
                             if(inboxMessages.isNotEmpty()) inboxMessages = inboxMessages.drop(1).toTypedArray()
                         }
+                        // set text of mail body to this variable "mailBody". this is the last read mail mail's body.
                         mailBody = getTextFromMessage(message)
                     }
+
+                    // enable button after code is run
                     inbox_read_mail_btn.isEnabled = true
                 }
             }
             inbox_instruction_button.id -> {
+                //stop & shutdown textToSpeech before proceeding. this is done so any thing that is being said atm is stopped.
                 if(::textToSpeech.isInitialized){
                     textToSpeech.stop()
                     textToSpeech.shutdown()
                 }
+                // check if messages has arrived before making the button do anything
                 if(::inboxMessages.isInitialized){
                     callSpeechToText()
                 }
@@ -176,7 +200,7 @@ class InboxActivity : AppCompatActivity(), View.OnClickListener, TextToSpeech.On
 
     // this gets run when "" TextToSpeech(this@InboxActivity, this) "" is run. we are using a live data to initialise this.
     // anytime we set a value to "" inboxActivityViewModel.textToSpeak.value = "... " textToSpeech gets initialsed because
-    // we are using a livedata to initialise it. Observers to liveData gets called when it the livedata value changes. And in
+    // that's the  action to be run when a change is observed. Observers to liveData gets called when it the livedata value changes. And in
     // this case, we are initialising textTospeech, and after initialising textToSpeech, this onInit(status : Int) method
     // below gets called. because it gets called when TextToSpeech is initialised.
     override fun onInit(status: Int) {
@@ -221,6 +245,8 @@ class InboxActivity : AppCompatActivity(), View.OnClickListener, TextToSpeech.On
                     if(results!=null) {
                         when(results[0]){
                             "1","one" -> {
+                                // if instruction is to read out mail's body. get the variable and assign it to the livedata
+                                // assigning it to the livedata makes it to be read out.
                                 if(!mailBody.isNullOrBlank()){
                                     inboxActivityViewModel.textToSpeak.value = mailBody
                                 }else{
@@ -228,11 +254,14 @@ class InboxActivity : AppCompatActivity(), View.OnClickListener, TextToSpeech.On
                                 }
                             }
                             "2","to","two","too" -> {
+                                // go back if 2 is the command
                                 onBackPressed()
                             }
                             "3","three","tree" -> {
+                                // speak the instructions again if 3 is the command
                                 inboxActivityViewModel.textToSpeak.value = getString(R.string.inbox_tts)
                             }else -> {
+                            // condition for unknown command string
                                 inboxActivityViewModel.textToSpeak.value = getString(
                                     R.string.unknown_command
                                 )
@@ -244,6 +273,7 @@ class InboxActivity : AppCompatActivity(), View.OnClickListener, TextToSpeech.On
         }
     }
 
+    // this is used to process mail body. As mail body can come in different formats.
     @Throws(IOException::class, MessagingException::class)
     private fun getTextFromMessage(message: Message): String? {
         var result: String? = ""
@@ -256,6 +286,7 @@ class InboxActivity : AppCompatActivity(), View.OnClickListener, TextToSpeech.On
         return result
     }
 
+    // this is used to process mail body. As mail body can come in different formats.
     @Throws(IOException::class, MessagingException::class)
     private fun getTextFromMimeMultipart(
         mimeMultipart: MimeMultipart
@@ -275,6 +306,7 @@ class InboxActivity : AppCompatActivity(), View.OnClickListener, TextToSpeech.On
         return result
     }
 
+    // this is used to process mail body. As mail body can come in different formats.
     @Throws(IOException::class, MessagingException::class)
     private fun getTextFromBodyPart(
         bodyPart: BodyPart

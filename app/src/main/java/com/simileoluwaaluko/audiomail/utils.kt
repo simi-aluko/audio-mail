@@ -5,6 +5,7 @@ package com.simileoluwaaluko.audiomail
  */
 
 object Constants{
+    // gmail connection credentials
     const val sendingHost = "smtp.gmail.com"
     const val sendingPort = 465
     const val receivingHost = "imap.gmail.com"

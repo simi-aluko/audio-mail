@@ -13,7 +13,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import com.simileoluwaaluko.audiomail.fragments.HomeFragmentDirections
 import com.simileoluwaaluko.audiomail.mainActivity.MainActivityViewModel
 import com.simileoluwaaluko.audiomail.R
 import com.simileoluwaaluko.audiomail.RegisterActivity
@@ -41,16 +40,25 @@ class HomeFragment : Fragment(), TextToSpeech.OnInitListener, View.OnClickListen
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        // set title of activity from fragment
         (activity as MainActivity).supportActionBar?.title = getString(R.string.welcome_)
+
+        // initialise viewmodel
         homeFragmentViewModel = ViewModelProvider(this)[MainActivityViewModel::class.java]
+
+        // set on clicklistener to btn
         commands_btn.setOnClickListener(this)
-        setUpViewModel()
+
+        // set up livedata
+        setUpLiveData()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
         when(requestCode){
+            // after the speak dialog goes away, the onActivity result is called. if the request code is this, the code in here runs
+            // we are switching between what speech to text to direct what the app does based on the spoken number(command)
             speechToTextRequestCode -> {
                 if(resultCode == Activity.RESULT_OK && data != null){
                     val results = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)
@@ -93,15 +101,22 @@ class HomeFragment : Fragment(), TextToSpeech.OnInitListener, View.OnClickListen
 
 
     private fun callSpeechToText(){
+        // create the android speech to text intent.
         val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault())
 
+        // making the call to start it
         if(intent.resolveActivity(activity!!.packageManager) != null){
             startActivityForResult(intent, speechToTextRequestCode)
         }else toast("Your device doesn't support speech input").show()
     }
 
+    // this gets run after the TextToSpeech is just initialised. after textToSpeech is initialised,
+    // that is when we can call it to convert text To Speech
+    // the viewmodel pattern is used. when the value in the livedata is changed. the observers tied to
+    // the livedata gets run. thence textToSpeech gets initialised  in the observer code in line 157,
+    // following that onInit below gets run to speak the text
     override fun onInit(status: Int) {
         if(status != TextToSpeech.ERROR){
             val result = textToSpeech.setLanguage(Locale.US)
@@ -116,6 +131,7 @@ class HomeFragment : Fragment(), TextToSpeech.OnInitListener, View.OnClickListen
         }
     }
 
+    // stop and release textToSpeech when activity is in destroyed
     override fun onDestroy() {
         if(::textToSpeech.isInitialized){
             textToSpeech.stop()
@@ -124,6 +140,7 @@ class HomeFragment : Fragment(), TextToSpeech.OnInitListener, View.OnClickListen
         super.onDestroy()
     }
 
+    // stop and release textToSpeech when activity is in paused state.
     override fun onPause() {
         if(::textToSpeech.isInitialized){
             textToSpeech.stop()
@@ -132,6 +149,7 @@ class HomeFragment : Fragment(), TextToSpeech.OnInitListener, View.OnClickListen
         super.onPause()
     }
 
+    // onclick function runs when views that onclicklisteners have been tied to is clicked.
     override fun onClick(v: View?) {
         when(v?.id){
             commands_btn.id -> {
@@ -140,7 +158,8 @@ class HomeFragment : Fragment(), TextToSpeech.OnInitListener, View.OnClickListen
         }
     }
 
-    private fun setUpViewModel(){
+    // set up observers for livedata. text to speech is initialised when the value of homeFragmentTextToBeSpoken changes.
+    private fun setUpLiveData(){
         homeFragmentViewModel.homeFragmentTextToBeSpoken.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
             textToSpeech = TextToSpeech(context, this)
         })
