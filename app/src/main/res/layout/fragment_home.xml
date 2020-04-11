@@ -87,6 +87,32 @@
                 android:textSize="17sp"
                 android:textColor="@color/colorPrimaryDark"
                 android:fontFamily="@font/cera_round_pro_regular"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_six"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="10dp"
+                android:text="@string/home_instruction_six"
+                android:gravity="center_vertical"
+                android:drawablePadding="15dp"
+                android:textSize="17sp"
+                android:textColor="@color/colorPrimaryDark"
+                android:fontFamily="@font/cera_round_pro_regular"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_seven"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="10dp"
+                android:text="@string/home_instruction_seven"
+                android:gravity="center_vertical"
+                android:drawablePadding="15dp"
+                android:textSize="17sp"
+                android:textColor="@color/colorPrimaryDark"
+                android:fontFamily="@font/cera_round_pro_regular"/>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 

@@ -16,8 +16,11 @@ import androidx.navigation.fragment.findNavController
 import com.simileoluwaaluko.audiomail.fragments.HomeFragmentDirections
 import com.simileoluwaaluko.audiomail.mainActivity.MainActivityViewModel
 import com.simileoluwaaluko.audiomail.R
+import com.simileoluwaaluko.audiomail.RegisterActivity
+import com.simileoluwaaluko.audiomail.inbox.InboxActivity
 import com.simileoluwaaluko.audiomail.mainActivity.MainActivity
 import kotlinx.android.synthetic.main.fragment_home.*
+import org.jetbrains.anko.support.v4.startActivity
 import org.jetbrains.anko.support.v4.toast
 import java.util.*
 
@@ -73,9 +76,9 @@ class HomeFragment : Fragment(), TextToSpeech.OnInitListener, View.OnClickListen
                                     HomeFragmentDirections.summarySendNavigation()
                                 findNavController().navigate(action)
                             }
-                            "5","five" -> homeFragmentViewModel.homeFragmentTextToBeSpoken.value = getString(
-                                R.string.home_tts
-                            )
+                            "5","five" -> startActivity<RegisterActivity>()
+                            "6", "six" -> startActivity<InboxActivity>()
+                            "7", "seven" -> homeFragmentViewModel.homeFragmentTextToBeSpoken.value = getString(R.string.home_tts)
                             else -> {
                                 homeFragmentViewModel.homeFragmentTextToBeSpoken.value = getString(
                                     R.string.unknown_command

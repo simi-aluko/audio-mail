@@ -76,4 +76,6 @@
         android:fontFamily="@font/cera_round_pro_regular"
         android:layout_gravity="center"
         android:layout_marginTop="30sp"/>
+
+
 </LinearLayout>

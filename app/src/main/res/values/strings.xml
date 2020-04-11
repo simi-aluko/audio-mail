@@ -15,7 +15,9 @@
     <string name="home_instruction_two"><b>Two</b>, to enter the Mail subject</string>
     <string name="home_instruction_three"><b>Three</b>, to enter the Message Body.</string>
     <string name="home_instruction_four"><b>Four</b>, to see the mail summary and send the mail.</string>
-    <string name="home_instruction_five"><b>Five</b>, to repeat the instructions.</string>
+    <string name="home_instruction_five"><b>Five</b>, to go to gmail registration page</string>
+    <string name="home_instruction_six"><b>Six</b>, to see mail inbox</string>
+    <string name="home_instruction_seven"><b>Seven</b>, to repeat the instructions.</string>
 
     <!--    Mail Recipient-->
     <string name="mail_recipient">Mail Recipient</string>
@@ -50,6 +52,10 @@
     <string name="mail_summarysend_instruction_four"><b>Four</b>, to repeat the instructions.</string>
     <string name="mail_summarysend_instruction_five"><b>Five</b>, to go back to home page.</string>
 
+    <!--    Mail inbox-->
+    <string name="inbox_instruction_one"><b>One</b>, to read out the mail body of last read out mail.</string>
+    <string name="inbox_instruction_two"><b>Two</b>, to go back to the home page.</string>
+    <string name="inbox_instruction_three"><b>Three</b>, to repeat the instructions.</string>
 
     <string name="speak_the_recipient_s_address">Speak the recipient\'s address</string>
     <string name="speak_the_mail_s_subject">Speak the mail subject</string>
@@ -62,10 +68,12 @@
     <string name="home_tts">Welcome to the home page.
     AudioMail helps you send mails completely via audio. To begin, click on the button at the bottom center, and say:
     One, to enter Recipients Address.
-    Two, to enter the Carbon Copy\'s Address.
+    Two, to enter the mail subject.
     Three, to enter the Message Body.
     Four, to see the mail summary and send the mail.
-    Five, to repeat the instructions.</string>
+    Five, to go to gmail registration page.
+    Six, to see mail inbox.
+    Seven, to repeat the instructions.</string>
 
     <string name="mail_recipient_tts">Mail Recipient page.
     Clicking on the button at the bottom left, you can read out the recipient\'s address, using the button on the bottom right, you can say the commands. Say:
@@ -94,6 +102,15 @@
     Three, to send mail.
     Four, to repeat the instructions.
     Five, to go back to home page.
+    </string>
+
+    <string name="inbox_tts">
+        Welcome to your mail inbox.
+        There are two buttons at the bottom of this page. One on the left bottom and one on the right bottom. You can click on the button at the bottom left
+        to read out your mails one by one, sequentially. Clicking on the button at the bottom right, Say:
+        One, to read out the body of the message that was read out to you last.
+        Two, to go back to the home page.
+        Three, to repeat the instructions.
     </string>
     <string name="unknown_command">Unknown command</string>
     <string name="register_title">Register your Gmail account</string>

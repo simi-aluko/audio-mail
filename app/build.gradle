@@ -52,6 +52,10 @@ dependencies {
     implementation "androidx.navigation:navigation-fragment-ktx:$navigationVersion"
     implementation "androidx.navigation:navigation-ui-ktx:$navigationVersion"
 
+    // JavaMail library for email network connections and for accessing mail
     implementation 'com.sun.mail:android-mail:1.6.2'
     implementation 'com.sun.mail:android-activation:1.6.2'
+
+    // Jsoup library for parsing html mail body
+    implementation 'org.jsoup:jsoup:1.11.1'
 }
