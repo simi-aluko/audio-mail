@@ -11,13 +11,10 @@
     <!--     Home-->
     <string name="welcome_">Welcome</string>
     <string name="home_explanation_header">AudioMail helps you send mails completely via audio. To begin, click on the button at the bottom center, and say:</string>
-    <string name="home_instruction_one"><b>One</b>, to enter Recipients Address.</string>
-    <string name="home_instruction_two"><b>Two</b>, to enter the Mail subject</string>
-    <string name="home_instruction_three"><b>Three</b>, to enter the Message Body.</string>
-    <string name="home_instruction_four"><b>Four</b>, to see the mail summary and send the mail.</string>
-    <string name="home_instruction_five"><b>Five</b>, to go to gmail registration page</string>
-    <string name="home_instruction_six"><b>Six</b>, to see mail inbox</string>
-    <string name="home_instruction_seven"><b>Seven</b>, to repeat the instructions.</string>
+    <string name="home_instruction_one"><b>One</b>, to compose mail.</string>
+    <string name="home_instruction_two"><b>Two</b>, to read recent mails.</string>
+    <string name="home_instruction_three"><b>Three</b>, to go to gmail registration page.</string>
+    <string name="home_instruction_four"><b>Four</b>, to repeat the instructions.</string>
 
     <!--    Mail Recipient-->
     <string name="mail_recipient">Mail Recipient</string>
@@ -67,13 +64,10 @@
     <!--    Text to Speech-->
     <string name="home_tts">Welcome to the home page.
     AudioMail helps you send mails completely via audio. To begin, click on the button at the bottom center, and say:
-    One, to enter Recipients Address.
-    Two, to enter the mail subject.
-    Three, to enter the Message Body.
-    Four, to see the mail summary and send the mail.
-    Five, to go to gmail registration page.
-    Six, to see mail inbox.
-    Seven, to repeat the instructions.</string>
+    One, to compose mail.
+    Two, to read recent mails.
+    Three, to go to gmail registration page.
+    Four, to repeat the instructions.</string>
 
     <string name="mail_recipient_tts">Mail Recipient page.
     Clicking on the button at the bottom left, you can read out the recipient\'s address, using the button on the bottom right, you can say the commands. Say:

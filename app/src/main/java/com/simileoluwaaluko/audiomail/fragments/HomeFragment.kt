@@ -69,24 +69,9 @@ class HomeFragment : Fragment(), TextToSpeech.OnInitListener, View.OnClickListen
                                     HomeFragmentDirections.recipientNavigation()
                                 findNavController().navigate(action)
                             }
-                            "2","to","two","too" -> {
-                                val action =
-                                    HomeFragmentDirections.ccNavigation()
-                                findNavController().navigate(action)
-                            }
-                            "3","three","tree" -> {
-                                val action =
-                                    HomeFragmentDirections.mailBodyNavigation()
-                                findNavController().navigate(action)
-                            }
-                            "4","four","for" -> {
-                                val action =
-                                    HomeFragmentDirections.summarySendNavigation()
-                                findNavController().navigate(action)
-                            }
-                            "5","five" -> startActivity<RegisterActivity>()
-                            "6", "six" -> startActivity<InboxActivity>()
-                            "7", "seven" -> homeFragmentViewModel.homeFragmentTextToBeSpoken.value = getString(R.string.home_tts)
+                            "2","to","two","too" -> startActivity<InboxActivity>()
+                            "3","three","tree" -> startActivity<RegisterActivity>()
+                            "4","four","for" -> homeFragmentViewModel.homeFragmentTextToBeSpoken.value = getString(R.string.home_tts)
                             else -> {
                                 homeFragmentViewModel.homeFragmentTextToBeSpoken.value = getString(
                                     R.string.unknown_command
